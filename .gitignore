@@ -1,0 +1,4 @@
+.idea/
+/vendor/
+.docker/cache/
+debug.log
