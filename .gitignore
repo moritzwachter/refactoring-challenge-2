@@ -2,3 +2,4 @@
 /vendor/
 .docker/cache/
 debug.log
+.env.local

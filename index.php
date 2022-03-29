@@ -7,11 +7,14 @@ use Gitlab\Client;
 
 require_once 'vendor/autoload.php';
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__, '.env.local');
+$dotenv->safeLoad();
+
 $config = [
     "slack" => [
-        "token" => '1234-5678-9ABC'
+        "token" => $_ENV['SLACK_TOKEN']
     ],
-    'GITLAB_TOKEN' => "asdf1234",
+    'GITLAB_TOKEN' => $_ENV['GITLAB_TOKEN'],
     'GITLAB_HOST' => 'https://path.to/gitlab',
     'GITLAB_PROJECT_ID' => 1234
 ];
