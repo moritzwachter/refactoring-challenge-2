@@ -4,7 +4,7 @@ namespace App\Command;
 
 use BotMan\BotMan\BotMan;
 
-class HelloCommand implements CommandInterface
+class HelloCommand extends AbstractCommand
 {
     public function execute(BotMan $bot, string $parameters): void
     {
@@ -14,10 +14,5 @@ class HelloCommand implements CommandInterface
     public function getCommand(): string
     {
         return "hello";
-    }
-
-    public function matches(string $command): bool
-    {
-        return $this->getCommand() === $command;
     }
 }

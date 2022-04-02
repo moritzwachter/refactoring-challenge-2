@@ -1,6 +1,7 @@
 <?php
 
 use App\Chatbot;
+use App\Command\GitlabDumpCommand;
 use App\Command\HelloCommand;
 use BotMan\BotMan\BotManFactory;
 use BotMan\BotMan\Drivers\DriverManager;
@@ -14,9 +15,11 @@ $config = [
     "slack" => [
         "token" => $_ENV['SLACK_TOKEN']
     ],
-    'GITLAB_TOKEN' => $_ENV['GITLAB_TOKEN'],
-    'GITLAB_HOST' => 'https://path.to/gitlab',
-    'GITLAB_PROJECT_ID' => 1234
+    'GITLAB_HOST' => $_ENV['GITLAB_HOST'],
+    'GITLAB_PROJECT_ID' => $_ENV['GITLAB_PROJECT_ID'],
+    'GITLAB_BRANCH' => $_ENV['GITLAB_BRANCH'],
+    'GITLAB_DUMP_FILE' => $_ENV['GITLAB_DUMP_FILE'],
+    'GITLAB_JOB_NAME' => $_ENV['GITLAB_JOB_NAME'],
 ];
 
 // Load the driver(s) you want to use
@@ -27,9 +30,10 @@ $botman = BotManFactory::create($config);
 
 // Initialise Chatbot object
 $commands = [
-    new HelloCommand()
+    new HelloCommand(),
+    new GitlabDumpCommand($config),
 ];
 
-$chatbot = new Chatbot($botman, $config, $commands);
+$chatbot = new Chatbot($botman, $commands);
 $chatbot->configureCommands();
 $chatbot->listen();
