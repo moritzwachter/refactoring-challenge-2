@@ -1,6 +1,7 @@
 <?php
 
 use App\Chatbot;
+use App\Command\HelloCommand;
 use BotMan\BotMan\BotManFactory;
 use BotMan\BotMan\Drivers\DriverManager;
 
@@ -25,6 +26,10 @@ DriverManager::loadDriver(\BotMan\Drivers\Slack\SlackDriver::class);
 $botman = BotManFactory::create($config);
 
 // Initialise Chatbot object
-$chatbot = new Chatbot($botman, $config);
+$commands = [
+    new HelloCommand()
+];
+
+$chatbot = new Chatbot($botman, $config, $commands);
 $chatbot->configureCommands();
 $chatbot->listen();

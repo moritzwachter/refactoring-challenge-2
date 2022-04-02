@@ -26,11 +26,12 @@ services:
 
   ngrok:
     image: wernight/ngrok
-    command: ngrok http nginx:80
     depends_on:
       - nginx
     ports:
       - "4040"
+    env_file:
+      - .env.local
 
   nginx:
     image: nginx:1.13.5-alpine
@@ -39,6 +40,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "4040"
     volumes:
       - ./:/usr/src/app:cached
       - ./.docker/nginx/app.conf:/etc/nginx/conf.d/default.conf

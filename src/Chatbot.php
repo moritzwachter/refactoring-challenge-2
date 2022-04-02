@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Command\CommandInterface;
 use BotMan\BotMan\BotMan;
 use Gitlab\Client;
 
@@ -10,17 +11,29 @@ class Chatbot
     private array $config;
     private BotMan $botman;
 
-    public function __construct(BotMan $bot, array $config)
+    /** @var CommandInterface[] $commands */
+    private array $commands;
+
+    public function __construct(BotMan $bot, array $config, array $commands)
     {
         $this->botman = $bot;
         $this->config = $config;
+        $this->commands = $commands;
     }
 
     # this is just temporary
     public function configureCommands(): void
     {
-        $this->botman->hears('!hello', function (BotMan $bot) {
-            $bot->reply('Hello yourself.');
+        $this->botman->hears('^!(\S+)( .+){0,1}$', function (BotMan $bot, $command, $parameters = '') {
+            if ($bot->getMessage()->isFromBot()) {
+                return;
+            }
+
+            foreach ($this->commands as $commandInstance) {
+                if ($commandInstance->matches($command)) {
+                    $commandInstance->execute($bot, $parameters);
+                }
+            }
         });
 
         $this->botman->hears('!projectdump', function (BotMan $bot) {
