@@ -13,6 +13,11 @@ class HelloCommand extends AbstractCommand
 
     public function getCommand(): string
     {
-        return "hello";
+        return "!hello";
+    }
+
+    public function getDescription(): string
+    {
+        return "Greetings, Sir!";
     }
 }

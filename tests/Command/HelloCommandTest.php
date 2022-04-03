@@ -12,8 +12,8 @@ class HelloCommandTest extends TestCase
     {
         $cmd = new HelloCommand();
 
-        $this->assertTrue($cmd->matches('hello'));
-        $this->assertFalse($cmd->matches('goodbye'));
+        $this->assertTrue($cmd->matches('!hello'));
+        $this->assertFalse($cmd->matches('!goodbye'));
     }
 
     public function testExecute(): void

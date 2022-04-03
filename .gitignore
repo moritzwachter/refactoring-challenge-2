@@ -4,3 +4,4 @@
 debug.log
 .env.local
 .phpunit.result.cache
+.bash_history

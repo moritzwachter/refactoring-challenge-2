@@ -3,6 +3,7 @@
 use App\Chatbot;
 use App\Command\GitlabDumpCommand;
 use App\Command\HelloCommand;
+use App\Command\HelpCommand;
 use BotMan\BotMan\BotManFactory;
 use BotMan\BotMan\Drivers\DriverManager;
 
@@ -24,15 +25,17 @@ $config = [
 
 // Load the driver(s) you want to use
 DriverManager::loadDriver(\BotMan\Drivers\Slack\SlackDriver::class);
-
-// Create an instance
 $botman = BotManFactory::create($config);
 
-// Initialise Chatbot object
+// init commands
+$helpCommand = new HelpCommand();
+
 $commands = [
     new HelloCommand(),
     new GitlabDumpCommand($config),
+    $helpCommand,
 ];
+$helpCommand->setCommands($commands);
 
 $chatbot = new Chatbot($botman, $commands);
 $chatbot->configureCommands();

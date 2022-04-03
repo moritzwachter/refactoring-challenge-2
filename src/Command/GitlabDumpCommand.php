@@ -27,8 +27,13 @@ class GitlabDumpCommand extends AbstractCommand
         $bot->reply($url);
     }
 
+    public function getDescription(): string
+    {
+        return "Get the latest DB dump from the pipeline";
+    }
+
     public function getCommand(): string
     {
-        return "projectdump";
+        return "!projectdump";
     }
 }
